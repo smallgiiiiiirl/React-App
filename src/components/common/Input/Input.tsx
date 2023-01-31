@@ -1,7 +1,9 @@
-import { FC } from "react";
+import { FC, ChangeEvent } from "react";
 
 interface InputProps {
-    placeholder: string
+    value: string,
+    placeholder: string,
+    onChange: (value: string, e: ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Input: FC<InputProps> = (obj) => <input placeholder={obj.placeholder} />
+export const Input: FC<InputProps> = ({ placeholder, onChange, value }) => <input value={value} placeholder={placeholder} onChange={(e) => (e.target.value, e)} />
