@@ -6,4 +6,4 @@ interface InputProps {
     onChange: (value: string, e: ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Input: FC<InputProps> = ({ placeholder, onChange, value }) => <input value={value} placeholder={placeholder} onChange={(e) => (e.target.value, e)} />
+export const Input: FC<InputProps> = ({ placeholder, onChange, value }) => <input value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value, e)} />

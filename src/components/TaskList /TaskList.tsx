@@ -2,7 +2,9 @@ import { Input, Button, Checkbox, Radiogroup } from "../common";
 import { Tasks } from "../types"
 import { Task } from "../Task/Task";
 import { useTask } from "./useTask"
-import { FC, useState, useCallback, useMemo } from "react";
+import { FC, useState, useCallback, useMemo, Fragment } from "react";
+import { Route, Routes, Link } from "react-router-dom";
+import { NotFound, TaskById, AuthPage, Header } from "../pages"
 
 const filters = [
     { id: '1', label: 'Done', value: 'done' },
@@ -12,12 +14,13 @@ const filters = [
 
 export const TaskList = () => {
     const [newTask, setNewTask] = useState("")
-    const [filter, setFilter] = useState(filters[3].value)
+    const [filter, setFilter] = useState(filters[2].value)
+    const [isAuth, setIsAuth] = useState(false)
     const {
         tasks, addTaskHandler, taskChangeHandler, deleteTaskHandler
     } = useTask(newTask, () => setNewTask(""))
 
-    const filteredUsers = useMemo(() => tasks.filter((task): boolean => {
+    const filteredTasks = useMemo(() => tasks.filter((task): boolean => {
         if (filter === 'all') {
             return true;
         }
@@ -27,8 +30,32 @@ export const TaskList = () => {
         , [tasks, filter]);
     return (
         <div>
-            <h1>ToDo List</h1>
-            <Input placeholder="New task" value={newTask} onChange={setNewTask} />
+            <Header />
+
+            <Routes>
+
+                <Route path="" element={
+                    <Fragment>
+                        <h1>ToDo List</h1>
+                        <Input placeholder="New task" value={newTask} onChange={setNewTask} />
+                        <Button onClick={addTaskHandler}>Add task</Button>
+                        <Radiogroup onChange={setFilter} items={filters} name="filter" value={filter} />
+
+                        <ul>
+                            {filteredTasks.map((task) => (
+                                <li key={task.id}>
+                                    <Task task={task} onDelete={deleteTaskHandler} onChange={taskChangeHandler} />
+                                </li>
+                            ))}
+                        </ul></Fragment>}
+                />
+                {/* <Route path="tasks/:id" element={<TaskById />} /> */}
+                {isAuth && <Route path="/secret" element={<AuthPage />} />}
+                <Route path="*" element={<NotFound />} />
+
+
+            </Routes>
+
 
         </div>
     )

@@ -17,12 +17,12 @@ export const Task: FC<TaskProps> = ({ task, onChange, onDelete }) => {
     }
     const editEndHandler = () => {
         setIsEdeted(false)
-        onChange(task.id, { label })
+        onChange(task.id, { label: name }) // не понимаю, что не так
     }
     return (
         <div>
-            <Checkbox checked={task.isDone} onChange={() => { task.id, { isDone: !task.isDone } }} />
-            {isEdited ? <Input placeholder="New task" value={name} onChange={setName} /> : <span>{ }task.label</span>}
+            <Checkbox checked={task.isDone} onChange={() => { onChange(task.id, { isDone: !task.isDone }) }} />
+            {isEdited ? <Input placeholder="New task" value={name} onChange={setName} /> : <span>{task.label}</span>}
             {task.isDone && <Button onClick={() => onDelete(task.id)}>Delete task</Button>}
             {!task.isDone && !isEdited && <Button onClick={editBeginHandler}>Edit</Button>}
             {!task.isDone && isEdited && <Button onClick={editEndHandler}>Save</Button>}
