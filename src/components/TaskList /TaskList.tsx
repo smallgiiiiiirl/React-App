@@ -1,5 +1,5 @@
 import { Input, Button, Checkbox, Radiogroup } from "../common";
-import { Tasks } from "../types"
+import { Tasks } from "../../store/types"
 import { Task } from "../Task/Task";
 import { useTask } from "./useTask"
 import { FC, useState, useCallback, useMemo, Fragment } from "react";
@@ -18,7 +18,7 @@ export const TaskList = () => {
     const [isAuth, setIsAuth] = useState(false)
     const {
         tasks, addTaskHandler, taskChangeHandler, deleteTaskHandler
-    } = useTask(newTask, () => setNewTask(""))
+    } = useTask(newTask, () => setNewTask(''))
 
     const filteredTasks = useMemo(() => tasks.filter((task): boolean => {
         if (filter === 'all') {
@@ -31,7 +31,6 @@ export const TaskList = () => {
     return (
         <div>
             <Header />
-
             <Routes>
 
                 <Route path="" element={
@@ -52,6 +51,8 @@ export const TaskList = () => {
                 {/* <Route path="tasks/:id" element={<TaskById />} /> */}
                 {isAuth && <Route path="/secret" element={<AuthPage />} />}
                 <Route path="*" element={<NotFound />} />
+
+
 
 
             </Routes>

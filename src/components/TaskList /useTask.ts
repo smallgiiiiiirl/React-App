@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Tasks } from '../types';
+import { Tasks } from '../../store/types';
 import { v4 as uuidv4 } from 'uuid';
 
 

@@ -30,12 +30,11 @@ export const Header = () => {
         <ul >
             <li><Link to="/secret">Profile</Link></li>
             <li><Link to="/">Main</Link></li>
-            {isAuth ? (
+            <li>{isAuth ? (
                 <button onClick={() => setIsAuth(false)}>LogOut</button>
             ) : (
                 <button onClick={() => setIsAuth(true)}>Auth</button>
-            )}
-
+            )}</li>
         </ul>
     )
 }
